@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "821306228718",
+    "firebase_url": "https://life-3c9b0-default-rtdb.firebaseio.com",
+    "project_id": "life-3c9b0",
+    "storage_bucket": "life-3c9b0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821306228718:android:6a70897f6a2c05c41b18ff",
+        "android_client_info": {
+          "package_name": "com.example.aqua"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOrVS4KCfV1bDo2z24CxpPYtRfIKpMLss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
