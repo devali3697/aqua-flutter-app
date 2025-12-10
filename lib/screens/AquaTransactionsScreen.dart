@@ -337,7 +337,7 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          '*ISABELLALKELIN1',
+                          '*ISABELLAKELIN1',
                           style: GoogleFonts.arimo(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,

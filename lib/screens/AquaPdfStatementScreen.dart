@@ -32,8 +32,10 @@ class _AquaPdfStatementScreenState extends State<AquaPdfStatementScreen> {
   bool _isDownloading = false;
   String? _lastSavedPath; // latest downloaded file path
 
-  Future<void> _downloadPdf() async {
-    if (_isDownloading) return;
+  // ---------------- DOWNLOAD HELPER (returns File?) ----------------
+  Future<File?> _downloadPdf({bool showToast = true}) async {
+    if (_isDownloading) return null;
+
     try {
       setState(() => _isDownloading = true);
 
@@ -42,35 +44,42 @@ class _AquaPdfStatementScreenState extends State<AquaPdfStatementScreen> {
 
       if (response.statusCode == 200) {
         final dir = await getApplicationDocumentsDirectory();
-        final safeName = widget.pdfTitle
-            .replaceAll(RegExp(r'[^a-zA-Z0-9_]'), '_');
+        final safeName =
+        widget.pdfTitle.replaceAll(RegExp(r'[^a-zA-Z0-9_]'), '_');
         final file = File('${dir.path}/$safeName.pdf');
 
         await file.writeAsBytes(response.bodyBytes);
         _lastSavedPath = file.path;
 
-        if (!mounted) return;
+        if (mounted && showToast) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('PDF saved: ${file.path}'),
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
+
+        return file;
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to download PDF (status != 200)'),
+            ),
+          );
+        }
+        return null;
+      }
+    } catch (e) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('PDF saved: ${file.path}'),
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to download PDF (status != 200)'),
+            content: Text('Download error: $e'),
           ),
         );
       }
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Download error: $e'),
-        ),
-      );
+      return null;
     } finally {
       if (mounted) {
         setState(() => _isDownloading = false);
@@ -78,20 +87,33 @@ class _AquaPdfStatementScreenState extends State<AquaPdfStatementScreen> {
     }
   }
 
+  // ---------------- EXPLICIT "DOWNLOAD" BUTTON ACTION ----------------
+  Future<void> _downloadPdfFromFab() async {
+    await _downloadPdf(showToast: true);
+  }
+
+  // ---------------- SHARE ALWAYS AS FILE ----------------
   Future<void> _sharePdf() async {
-    // agar humne abhi download kiya hai to file share kar do
+    File? file;
+
     if (_lastSavedPath != null && await File(_lastSavedPath!).exists()) {
-      await Share.shareXFiles(
-        [XFile(_lastSavedPath!)],
-        text: widget.pdfTitle,
-      );
+      file = File(_lastSavedPath!);
     } else {
-      // warna simple url share (ye bhi completely valid hai)
-      await Share.share(
-        widget.pdfUrl,
-        subject: widget.pdfTitle,
-      );
+      // agar pehle download nahi hui to abhi chup-chaap download karo (toast off)
+      file = await _downloadPdf(showToast: false);
+      if (file == null) return;
     }
+
+    await Share.shareXFiles(
+      [
+        XFile(
+          file.path,
+          mimeType: 'application/pdf', // 👈 important
+          name: '${widget.pdfTitle}.pdf',
+        ),
+      ],
+      text: widget.pdfTitle,
+    );
   }
 
   @override
@@ -102,7 +124,7 @@ class _AquaPdfStatementScreenState extends State<AquaPdfStatementScreen> {
       // ---------- FLOATING DOWNLOAD BUTTON ----------
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AquaPdfStatementScreen._blue,
-        onPressed: _isDownloading ? null : _downloadPdf,
+        onPressed: _isDownloading ? null : _downloadPdfFromFab,
         icon: _isDownloading
             ? const SizedBox(
           width: 18,
@@ -164,7 +186,7 @@ class _AquaPdfStatementScreenState extends State<AquaPdfStatementScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
-                      onPressed: _sharePdf, // ✅ actually share karega
+                      onPressed: _sharePdf,
                       icon: const Icon(
                         Icons.share,
                         size: 20,
