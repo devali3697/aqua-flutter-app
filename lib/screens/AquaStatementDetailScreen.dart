@@ -24,10 +24,10 @@ class AquaStatementDetailScreen extends StatelessWidget {
       paymentsAndCredits: '£150.00',
     ),
     'November': _StatementData(
-      balance: '£3,012.00',
-      asOfText: '6th Nov',
-      transactionsAndCharges: '£864.00',
-      paymentsAndCredits: '£1,000.00',
+      balance: '£4,075.00',
+      asOfText: '5th Nov',
+      transactionsAndCharges: '£2,000.00',
+      paymentsAndCredits: '£150.00',
     ),
     'October': _StatementData(
       balance: '£3,135.00',
@@ -123,6 +123,15 @@ class AquaStatementDetailScreen extends StatelessWidget {
             ),
 
             const Divider(height: 1, color: Color(0xFFE1E1E1)),
+            // Container(
+            //   color: const Color(0xFFFFE8A3),
+            //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            //   child: const Text(
+            //     'DEMO — SAMPLE DATA — NOT A REAL FINANCIAL STATEMENT',
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            //   ),
+            // ),
 
             // ---------- CONTENT ----------
             Expanded(
@@ -178,12 +187,12 @@ class AquaStatementDetailScreen extends StatelessWidget {
 
                   const SizedBox(height: 40),
 
-                  // ------- Open PDF (only for December) -------
+                  // ------- Open PDF (only for November) -------
                   Center(
                     child: GestureDetector(
                       onTap: () async {
-                        // ✅ Only December is allowed to open PDF
-                        if (month != 'December') {
+                        // ✅ Only November is allowed to open PDF
+                        if (month != 'November') {
                           // do nothing at all
                           return;
                         }
@@ -284,7 +293,7 @@ class AquaStatementDetailScreen extends StatelessWidget {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => AquaPdfStatementScreen(
-            pdfTitle: month, // header me month dikhayenge
+            pdfTitle: month, // PDF title
             pdfUrl: url,     // Firebase se aaya hua URL
           ),
         ),

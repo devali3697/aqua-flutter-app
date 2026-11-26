@@ -24,6 +24,19 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            const Material(
+              child: SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    '',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(height: 12),
 
             // ================== RECTANGULAR TABS ==================
@@ -180,7 +193,7 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
               const SizedBox(height: 26),
               _buildSummaryCard(
                 amount: '£4,075.00',
-                subtitle: '07 Nov - 05 Dec',
+                subtitle: '07 Oct - 05 Nov',
                 rightLabel: 'Previous',
               ),
             ],
@@ -189,11 +202,11 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
 
         const SizedBox(height: 26),
 
-        // ======== Mon, 24 Nov – Payment Received -£150.00 ========
+        // ======== Mon, 02 Nov – Payment Received -£150.00 ========
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Mon, 24 Nov',
+            'Mon, 02 Nov',
             style: GoogleFonts.arimo(
               fontSize: 13,
               color: const Color(0xFF8E8E93),
@@ -277,11 +290,11 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
 
         const SizedBox(height: 26),
 
-        // ======== Sat, 09 Nov – PAYPAL PAYMENT OUT ========
+        // ======== Sat, 31 Oct – PAYPAL PAYMENT OUT ========
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Sat, 09 Nov',
+            'Sat, 31 Oct',
             style: GoogleFonts.arimo(
               fontSize: 13,
               color: const Color(0xFF8E8E93),
@@ -351,7 +364,7 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
                 Padding(
                   padding: const EdgeInsets.only(right: 16, top: 14, bottom: 14),
                   child: Text(
-                    '£1,200.00',
+                    '£2,000.00',
                     style: GoogleFonts.arimo(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
@@ -384,7 +397,7 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             child: _buildSummaryCard(
               amount: '£3,012.00',
-              subtitle: '07 Oct - 06 Nov',
+              subtitle: '07 Sep - 05 Oct',
               rightLabel: 'Previous',
             ),
           ),
@@ -392,11 +405,11 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
 
         const SizedBox(height: 26),
 
-        // ======== Thu, 05 Nov – PLAYHOUSE-MONTESSORI £864.00 ========
+        // ======== Sun, 04 Oct – PLAYHOUSE-MONTESSORI £864.00 ========
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Thu, 05 Nov',
+            'Sun, 04 Oct',
             style: GoogleFonts.arimo(
               fontSize: 13,
               color: const Color(0xFF8E8E93),
@@ -415,11 +428,11 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
 
         const SizedBox(height: 26),
 
-        // ======== Fri, 24 Oct – Payment Received for £1,000 ========
+        // ======== Thu, 24 Sep – Payment Received for £1,000 ========
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            'Fri, 24 Oct',
+            'Thu, 24 Sep',
             style: GoogleFonts.arimo(
               fontSize: 13,
               color: const Color(0xFF8E8E93),
@@ -696,19 +709,19 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
         ),
         const SizedBox(height: 10),
 
-        // December
+        // November
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: _buildStatementCard('December'),
+          child: _buildStatementCard('November'),
         ),
 
         const SizedBox(height: 32),
 
-        // 2025
+        // 2026
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Text(
-            '2025',
+            '2026',
             style: GoogleFonts.arimo(
               fontSize: 13,
               fontWeight: FontWeight.w600,
@@ -719,7 +732,7 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
         ),
         const SizedBox(height: 10),
 
-        // 2025 months list (Nov → Apr) inside single card  — JUNE REMOVED
+        // 2026 months list (Oct → Apr) inside single card  — JUNE REMOVED
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Container(
@@ -736,7 +749,6 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
             ),
             child: const Column(
               children: [
-                _StatementRowWithDivider(month: 'November', showDivider: true),
                 _StatementRowWithDivider(month: 'October', showDivider: true),
                 _StatementRowWithDivider(month: 'September', showDivider: true),
                 _StatementRowWithDivider(month: 'August', showDivider: true),
@@ -753,7 +765,7 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
     );
   }
 
-  // Card with tap (December)
+  // Card with tap (November)
   Widget _buildStatementCard(String month) {
     return GestureDetector(
       onTap: () {
@@ -802,7 +814,7 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
     );
   }
 
-  // Reusable row for grouped 2025 months
+  // Reusable row for grouped 2026 months
   Widget _buildStatementRow(String month) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -820,7 +832,7 @@ class _AquaTransactionsScreenState extends State<AquaTransactionsScreen> {
   }
 }
 
-// Helper widget for 2025 months with optional divider
+// Helper widget for 2026 months with optional divider
 class _StatementRowWithDivider extends StatelessWidget {
   final String month;
   final bool showDivider;
